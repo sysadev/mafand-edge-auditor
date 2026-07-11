@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Data & Database firewalls
+data/raw/*
+!data/raw/mafand.json
+data/artifacts/*
+*.sqlite
+*.db
+
+# OS generated files
+.DS_Store
+Thumbs.db
