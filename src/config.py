@@ -24,7 +24,7 @@ HAUSA_IMMUNITY_WORDS = {
     "da", "ne", "ce", "ya", "na", "ta", "ka", "ba", "kuma",
     "cewa", "wanda", "wani", "wata", "sai", "suka", "yake",
     "daga", "wannan", "cikin", "lokacin", "akan", "yadda",
-    "zuwa", "saboda"
+    "zuwa", "saboda", "jinsi"
 }
 
 # Unique Hausa orthographic hooked characters

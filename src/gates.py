@@ -13,21 +13,21 @@ from src.config import (
 )
 
 
-def _gate_1_language_check(target_text: str) -> Tuple[bool, str]:
-    """Gate 1: The Smart Bouncer. CLD2 backed by native Hausa DNA overrides."""
+def _gate_1_language_check(source_text: str, target_text: str) -> Tuple[bool, str]:
+    """Gate 1: Language and Script Validation."""
     if not target_text:
         return False, "Target string is totally empty."
 
-    # 1. Diplomatic Immunity: Hooked Hausa orthography
+    # 1. Native Hausa orthographic markers
     if any(char in HAUSA_HOOKS for char in target_text):
         return True, ""
 
-    # 2. Diplomatic Immunity: High-frequency Hausa syntactic glue
+    # 2. High frequency Hausa syntactic markers
     words = set(re.findall(r"\b[a-z']+\b", target_text.lower()))
     if words.intersection(HAUSA_IMMUNITY_WORDS):
         return True, ""
 
-    # 3. CLD2 Engine Inspection
+    # 3. CLD2 Language Detection
     try:
         is_reliable, _, details = cld2.detect(target_text)
     except Exception as e:
@@ -36,9 +36,21 @@ def _gate_1_language_check(target_text: str) -> Tuple[bool, str]:
     top_lang_name, top_lang_code, confidence, _ = details[0]
     expected_code = "ha" if TARGET_LANG == "hau" else TARGET_LANG
 
-    if top_lang_code == "un":
-        return False, "CLD2 returned 'Unknown' on a string lacking Hausa markers."
+    # 4. Confident Foreign Language Rejection
+    if top_lang_code not in (expected_code, "un") and confidence >= 80:
+        return False, f"Language mismatch. Detected '{top_lang_name}' ({top_lang_code}) at {confidence}% confidence."
 
+    # 5. Invariant Entity Bypass versus Untranslated Sentences
+    if source_text.strip() == target_text.strip():
+        if len(words) <= 3:
+            return True, ""
+        return False, "Untranslated source text repeated as target."
+
+    # 6. Forgiving the Unknown Classification
+    if top_lang_code == "un":
+        return True, ""
+
+    # 7. Final mismatch catch
     if top_lang_code != expected_code:
         return False, f"Language mismatch. Detected '{top_lang_name}' ({top_lang_code}) at {confidence}% confidence."
 
@@ -46,7 +58,7 @@ def _gate_1_language_check(target_text: str) -> Tuple[bool, str]:
 
 
 def _gate_2_length_skew(source_text: str, target_text: str) -> Tuple[bool, str]:
-    """Gate 2: The Scale. Checks word-count physics between source and target."""
+    """Gate 2: The Scale. Checks word count physics between source and target."""
     src_words = source_text.split()
     tgt_words = target_text.split()
 
@@ -64,7 +76,7 @@ def _gate_2_length_skew(source_text: str, target_text: str) -> Tuple[bool, str]:
         return False, f"Severe truncation. Ratio {ratio:.2f} < min {MIN_TOKEN_RATIO} (Eng: {src_len}w, Hausa: {tgt_len}w)"
 
     if ratio > MAX_TOKEN_RATIO:
-        return False, f"Severe bloat/hallucination. Ratio {ratio:.2f} > max {MAX_TOKEN_RATIO} (Eng: {src_len}w, Hausa: {tgt_len}w)"
+        return False, f"Severe hallucination. Ratio {ratio:.2f} > max {MAX_TOKEN_RATIO} (Eng: {src_len}w, Hausa: {tgt_len}w)"
 
     return True, ""
 
@@ -104,7 +116,7 @@ def audit_sentence_pair(source: str, target: str) -> Tuple[bool, str, str]:
     The Master Gateway. Passes data through Bouncers 1, 2, and 3 sequentially.
     Returns: (is_valid, gate_failed_enum, error_reason_text)
     """
-    passed, reason = _gate_1_language_check(target)
+    passed, reason = _gate_1_language_check(source, target)
     if not passed:
         return False, "GATE_1_LANG_ID", reason
 
