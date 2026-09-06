@@ -6,6 +6,8 @@ __pycache__/
 data/raw/*
 !data/raw/mafand.json
 data/artifacts/*
+!data/artifacts/filtered.json
+!data/artifacts/fixed.json
 *.sqlite
 *.db
 
