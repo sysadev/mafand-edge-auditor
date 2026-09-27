@@ -8,7 +8,7 @@ BATCH_SIZE = 1000  # Hold 1,000 rows in RAM (~200KB), then flush to disk
 
 
 def main():
-    print("\n[+] Booting Hausa NLP Data Fidelity Auditor...")
+    print("\n[+] Booting MAFAND-MT Edge Auditor...")
     start_time = time.time()
 
     db = AuditDatabase()
