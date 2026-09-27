@@ -9,6 +9,7 @@ version: 1.0.0
 date-released: 2026-09-27
 repository-code: "https://github.com/sysadev/mafand-edge-auditor"
 license: MIT
+doi: "10.5281/zenodo.23003213"
 abstract: >-
   A deterministic, lightweight heuristic pipeline for auditing and
   sanitizing parallel corpora in low-resource African language

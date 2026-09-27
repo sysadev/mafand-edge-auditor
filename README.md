@@ -1,5 +1,7 @@
 # MAFAND-MT Edge Auditor
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23003213.svg)](https://doi.org/10.5281/zenodo.23003213)
+
 A deterministic, lightweight heuristic pipeline for auditing and sanitizing parallel corpora in low-resource African language translation.
 
 Engineered specifically for the Hausa subset of the MAFAND-MT corpus, this tool identifies web-scraping noise, severe length skews, and entity omissions in sub-second runtimes on standard consumer hardware.
@@ -88,11 +90,14 @@ If you use this dataset, please cite the original paper:
 If you use this auditing tool or reference our findings, please cite:
 
 ```bibtex
-@misc{Yusuf2026mafand,
-  title={MAFAND-MT Edge Auditor},
-  author={Yusuf, Shuaib Shuaib},
-  year={2026},
-  publisher={GitHub},
-  howpublished={\url{https://github.com/sysadev/mafand-edge-auditor}}
+@software{yusuf_2026_23003214,
+  author       = {Yusuf, Shuaib Shuaib},
+  title        = {MAFAND-MT Edge Auditor},
+  month        = sep,
+  year         = 2026,
+  publisher    = {Zenodo},
+  version      = {v1.0.0},
+  doi          = {10.5281/zenodo.23003213},
+  url          = {https://doi.org/10.5281/zenodo.23003213},
 }
 ```
