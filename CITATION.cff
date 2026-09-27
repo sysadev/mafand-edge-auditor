@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "MAFAND-MT Edge Auditor"
+authors:
+  - family-names: "Yusuf"
+    given-names: "Shuaib Shuaib"
+    orcid: "https://orcid.org/0009-0006-9440-1711"
+version: 1.0.0
+date-released: 2026-09-27
+repository-code: "https://github.com/sysadev/mafand-edge-auditor"
+license: MIT
+abstract: >-
+  A deterministic, lightweight heuristic pipeline for auditing and
+  sanitizing parallel corpora in low-resource African language
+  translation, engineered for the Hausa subset of the MAFAND-MT corpus.
+keywords:
+  - natural language processing
+  - low-resource languages
+  - Hausa
+  - corpus filtering
+  - machine translation
